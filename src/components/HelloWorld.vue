@@ -1,44 +1,26 @@
-<script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true,
-  },
-})
-</script>
-
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vite.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
-    </h3>
-  </div>
+  <header class="bg-white dark:bg-gray-900 text-center">
+
+    <div class="container px-6 py-16 mx-auto">
+        <div class="items-center lg:flex">
+            <div class="w-full lg:w-1/2">
+                <div class="lg:max-w-lg">
+                    <h1 class="text-3xl font-semibold text-gray-800 dark:text-white lg:text-4xl">Imprimez vos <span class="text-blue-500 "> documents </span> <br>  ou que vous soyez </h1>
+                    
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">Envoyez vos documents directements a nos differents imprimentes connectes, et recuperer les en toutes simplicites. </p>
+                    
+                    <button class="w-full px-5 py-2 mt-6 flex text-sm tracking-wider text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                      Demarrer
+                      <img class="w-5 h-5 sm:h-6 sm:w-6 ml-3" src="../assets/svg/sign-in-circle-svgrepo-com.svg" alt="">
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/3">
+                <img class="w-full h-full lg:max-w-3xl" src="../assets/svg/printer-free-3-svgrepo-com.svg" alt="Catalogue-pana.svg">
+            </div>
+        </div>
+    </div>
+
+</header>
 </template>
-
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
-</style>
