@@ -1,13 +1,19 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import NavBar from './components/NavBar.vue';
+import NavBar from './components/NavBar.vue'
+import Footer from './components/Footer.vue'
 </script>
 
 <template>
-  <!-- Bar de Navigation -->
-  <NavBar />
 
-  <HelloWorld />
+    <!-- Bar de Navigation -->
+    <NavBar />
 
+    <!-- Corps dynamique [Layouts] -->
+    <RouterView />
+
+    <!-- Footer -->
+     <Footer class="hidden md:flex" />
 </template>
+
+
