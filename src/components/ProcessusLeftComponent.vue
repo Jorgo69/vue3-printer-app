@@ -1,28 +1,62 @@
 
 <template>
-    <div class="col-span-1 md:col-span-8 bg-red-400 h-96 rounded-sm" >
-        <div class="max-w-full px-8 py-4 bg-white shadow-md dark:bg-gray-800">
-            <div class="flex items-center justify-between">
-                <!-- Bg Color -->
-                <div class="">
-                    <span class="text-sm font-light text-gray-600 dark:text-gray-400">Nom du fichier (Nbre total de page)</span> <br>
-                    <span>
-                        <img src="../assets/svg/paper-svgrepo-com.svg" alt="Svg papier" class="size-4">
-                    </span>
-                </div>
-                <div class="flex">
-                    <span class="underline mx-2">
-                        Prix unitaire
-                    </span>
-                    <button class="flex px-2 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500" tabindex="0" role="button">
-                        Voir 
-                        <img src="../assets//svg/eye-svgrepo-com.svg" alt="ppp" class="size-6 mx-1">
-                    </button>
-                <!-- End Bg Color -->
+    <div class="col-span-1 grid grid-row-2 gap-2 md:col-span-8" >
 
-                    <button>
-                        <img src="../assets/svg/basket-svgrepo-com.svg" alt="cool" class="size-6 hover:text-red-400">
-                    </button>
+        <div class="grid grid-cols-12 h-24 bg-gray-100">
+            <div class="col-span-10 bg-gray-50 flex justify-around">
+                <div class="">
+                    gauche 1
+                </div>
+                <div class="">
+                    gauche 2
+                </div>
+
+            </div>
+            <div class="col-span-2 bg-yellow-200 ">
+                droite
+            </div>
+        </div>
+
+        <div class="max-w-full px-4 py-2 bg-gray-300 shadow-md dark:bg-gray-800">
+            <div class="grid grid-cols-12 ">
+
+                <div class="col-span-11  grid grid-cols-12 ">
+                    <div class="col-span-8">
+                        Nom du fichier
+                    </div>
+                    <div class="col-span-4 flex">
+                        Prix unitaire
+                        Ouvrir avec 
+                        <span>
+                            <img src="../assets/svg/eye-svgrepo-com.svg" alt="Icon pour representer oeil" class="size-6">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-span-1">
+                    <img src="../assets/svg/basket-svgrepo-com.svg" alt="Poubelle" class="size-6">
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-full px-4 py-2 bg-gray-300 shadow-md dark:bg-gray-800">
+            <div class="grid grid-cols-12 ">
+
+                <div class="col-span-11  grid grid-cols-12 ">
+                    <div class="col-span-8">
+                        Nom du fichier
+                    </div>
+                    <div class="col-span-4 flex">
+                        Prix unitaire
+                        Ouvrir avec 
+                        <span>
+                            <img src="../assets/svg/eye-svgrepo-com.svg" alt="Icon pour representer oeil" class="size-6">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-span-1">
+                    <img src="../assets/svg/basket-svgrepo-com.svg" alt="Poubelle" class="size-6">
                 </div>
             </div>
         </div>
