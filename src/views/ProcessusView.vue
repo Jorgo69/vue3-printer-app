@@ -6,7 +6,7 @@ import { RouterLink } from 'vue-router';
 
 <template>
     
-    <section class="bg-gray-1 p-4 m-4 flex justify-between ">
+    <section class="bg-gray-300 p-4 m-4 flex justify-between ">
 
         <div class="file-upload">
             <!-- Input de fichier masqué -->

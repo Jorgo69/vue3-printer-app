@@ -50,27 +50,7 @@ Initalisation de Vue avec npm 20:
 
 
 
-
-
-
-
-
-
-
-
-
-
 _________________
-
-
-
-
-
-
-
-
-
-
 
 
 Voici les étapes pour builder et déployer votre application Vue.js sur Surge :
@@ -182,3 +162,42 @@ cp index.html 200.html
 
 
 Domaine: ibra-printer-app.surge.sh
+
+
+-----------------------------
+Creer une nouvelle branch et heberger dessus
+
+1. Créer une nouvelle branche à partir de main
+a. Assurez-vous que votre dépôt est à jour
+Avant de créer une nouvelle branche, synchronisez votre dépôt local avec la branche main :
+```
+git checkout main       # Basculer sur la branche main
+git pull origin main    # Mettre à jour la branche main
+```
+
+b. Créer une nouvelle branche
+Créez une nouvelle branche à partir de main. Par exemple, nommez-la feature/new-feature :
+git checkout -b feature/new-feature
+git checkout -b : Crée une nouvelle branche et bascule dessus.
+
+feature/new-feature : Remplacez ce nom par celui de votre choix (par exemple, dev, staging, etc.).
+
+2. Travailler sur la nouvelle branche
+a. Faites vos modifications
+Ajoutez ou modifiez des fichiers dans votre projet. Par exemple :
+
+```
+git add .                     # Ajouter tous les fichiers modifiés
+git commit -m "Ajout d'une nouvelle fonctionnalité"
+```
+
+3. Pousser la nouvelle branche vers le dépôt distant
+Poussez votre nouvelle branche vers le dépôt distant (GitHub, GitLab, etc.) :
+```
+git push origin feature/new-feature
+```
+
+origin : Le nom du dépôt distant (par défaut, c'est origin).
+
+feature/new-feature : Le nom de votre nouvelle branche.
+
