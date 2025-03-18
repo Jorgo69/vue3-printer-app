@@ -201,3 +201,26 @@ origin : Le nom du dépôt distant (par défaut, c'est origin).
 
 feature/new-feature : Le nom de votre nouvelle branche.
 
+----------------
+
+```
+# Récupérer les dernières modifications
+git fetch origin
+
+# Basculer sur ubuntu-dev
+git checkout ubuntu-dev
+
+# Fusionner win-dev dans ubuntu-dev
+git merge origin/win-dev
+
+# Résoudre les conflits (si nécessaire)
+# Pousser les modifications (optionnel)
+git push origin ubuntu-dev
+
+```
+
+sm: ≥640px
+md: ≥768px
+lg: ≥1024px
+xl: ≥1280px
+2xl: ≥1536px
