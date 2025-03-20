@@ -2,6 +2,22 @@
 import ProcessusLeftComponent from '@/components/ProcessusLeftComponent.vue';
 import ProcessusRightComponent from '@/components/ProcessusRightComponent.vue';
 import { RouterLink } from 'vue-router';
+
+
+import { ref } from "vue"; // pour des data reactifs
+
+
+    const files  = ref<File[]>([]);
+
+    const handleFileUpload = (event: Event) => {
+        const target = event.target as HTMLInputElement;
+        if(target.files){
+            files.value = [
+                ...files.value,
+                ...Array.from(target.files)
+            ];
+        }
+    };
 </script>
 
 <template>
@@ -17,6 +33,7 @@ import { RouterLink } from 'vue-router';
                 name="file"
                 id="fileInput"
                 class="hidden"
+                @change="handleFileUpload"
             />
 
             <!-- Bouton personnalisé -->
@@ -33,7 +50,7 @@ import { RouterLink } from 'vue-router';
     <section class="grid grid-cols-1  md:grid-cols-12 gap-4 m-4">
 
         <!-- Le second composant occupe 8 colonnes -->
-        <ProcessusLeftComponent  />
+        <ProcessusLeftComponent :files="files" />
         <!-- Le premier composant occupe 4 colonnes -->
         <ProcessusRightComponent />
     </section>
