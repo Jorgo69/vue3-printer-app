@@ -1,6 +1,28 @@
-<script setup>
+<script setup lang="ts">
+    // import { defineProps } from "vue";
 
+    interface Props {
+        files: {
+            name: string,
+            size: number,
+            type: string,
+        }[];
+    };
 
+    // interface Props {
+    //     files: File[];
+    // };
+
+    const props = defineProps<Props>();
+
+    const emit = defineEmits<{
+        (e: "removeFile", index: number): void // evenement pour supprimer
+    }>();
+
+    //fonction pour la suppresion
+    const handleRemoveFile = (index: number) => {
+        emit("removeFile", index); // emet l'element avec l'index
+    }
 
 
     import Poubelle from "@/assets/svg/poubelle.vue";
@@ -9,6 +31,8 @@
     import A4 from "@/assets/svg/a4.vue";
     import Paysage from "@/assets/svg/paysage.vue";
     import RectoVerso from "@/assets/svg/doucle.vue";
+
+    
     
 
 </script>
@@ -18,13 +42,15 @@
 
 
         <!-- Start Container card -->
-         <div class="" v-if="files">
-            <div v-for="(file, index) in files" :key="index" class="grid grid-cols-12 bg-gray-400 rounded-sm">
+         <div class="" v-if="props.files.length > 0">
+            <div v-for="(file, index) in files" :key="index" class="grid grid-cols-12 m-2 bg-gray-400 rounded-sm">
                 <div class="col-span-11 flex items-center justify-between px-2 content-around bg-gray-50 hover:bg-gray-400 transition duration-300 ease-in-out rounded-sm">
 
                     <div class="md:bg-transparent 3xs:bg-custom-blue">
                         <div class="">
-                            WhatsApp Image 2025-03-10 at 22.12.41.jpeg (56 x 91mm @300dpi)
+                            {{file.name}} ( {{ file.size + ' Mo' }} )
+
+                            {{ console.log(file)}}
                         </div>
                         <div class="flex gap-2">
                             <Paper class="size-10 fill-blue-500  stroke-white" />
@@ -49,13 +75,18 @@
                     </div>
 
                 </div>
-                <div class="col-span-1 bg-yellow-200 flex items-center justify-center">
-                    <Poubelle class="size-6" />
-                </div>
+                <button class="col-span-1 bg-yellow-200 flex items-center justify-center cursor-pointer" @click="handleRemoveFile(index)">
+                        <Poubelle class="size-6" />
+                </button>
             </div>
         </div>
+
         <div class="" v-else>
-            -----------
+            <div class="grid grid-cols-12 rounded-sm my-4">
+                <div class="col-span-11 text-center text-5xl">
+                    Veuillez Televerser un document
+                </div>
+            </div>
         </div>
         <!-- End Container Card -->
 
