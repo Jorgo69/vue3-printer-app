@@ -17,11 +17,25 @@
 
     const emit = defineEmits<{
         (e: "removeFile", index: number): void // evenement pour supprimer
+        (e: "selectFile", index: number): void // evenement pour supprimer
     }>();
 
     //fonction pour la suppresion
     const handleRemoveFile = (index: number) => {
         emit("removeFile", index); // emet l'element avec l'index
+    }
+
+    // conversion de la taille
+    const formatFileSize = (bytes: number): string => {
+        if(bytes < 1024) {
+            return ` ${bytes} bytes `; // Affiche en bytes si inferieur a 1Ko
+        } else if (bytes < 1024 * 1024) {
+            const kilobytes = (bytes / 1024).toFixed(2); // en Ko
+            return ` ${kilobytes} ko `;
+        }else{
+            const megabytes = (bytes / (1024 * 1024) ).toFixed(2); // conversion en Mo
+            return ` ${megabytes} `;
+        }
     }
 
 
@@ -31,6 +45,8 @@
     import A4 from "@/assets/svg/a4.vue";
     import Paysage from "@/assets/svg/paysage.vue";
     import RectoVerso from "@/assets/svg/doucle.vue";
+
+
 
     
     
@@ -48,9 +64,7 @@
 
                     <div class="md:bg-transparent 3xs:bg-custom-blue">
                         <div class="">
-                            {{file.name}} ( {{ file.size + ' Mo' }} )
-
-                            {{ console.log(file)}}
+                            {{file.name}} ( {{ formatFileSize(file.size) }} )
                         </div>
                         <div class="flex gap-2">
                             <Paper class="size-10 fill-blue-500  stroke-white" />

@@ -1,12 +1,3 @@
-<script setup>
-// Importations nécessaires
-import { ref } from 'vue'; // Pour gérer l'état réactif
-import { RouterLink } from 'vue-router'; // Pour utiliser RouterLink
-
-// État pour gérer l'ouverture/fermeture du menu mobile
-const isOpen = ref(false);
-</script>
-
 <template>
       <nav class="relative bg-white shadow dark:bg-gray-800">
     <div class="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
@@ -81,13 +72,56 @@ const isOpen = ref(false);
           <!-- Fin Panier -->
 
           <button class="bg-white flex items-center text-gray-700 dark:text-gray-300 justify-center gap-x-3  text-sm sm:text-base  dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5">
-            <img class="w-5 h-5 sm:h-6 sm:w-6" src='../assets/svg/sign-in-circle-svgrepo-com.svg' alt="">
-            <RouterLink to="/login">
+            <img  class="w-5 h-5 sm:h-6 sm:w-6" src='../assets/svg/sign-in-circle-svgrepo-com.svg' alt="">
+            <RouterLink v-if="!isLoggedIn" to="/login">
               <span>Se connecter</span>
             </RouterLink>
+
+            <button @click="handleSignOut" v-if="isLoggedIn">
+              <span>Se Deconnecter</span>
+            </button>
+
         </button>
         </div>
       </div>
     </div>
   </nav>
 </template>
+
+
+<script setup>
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onMounted, ref } from 'vue';
+import { auth } from '../../firebase';
+
+
+const isOpen = ref(false);
+const isLoggedIn = ref(false);
+
+
+// Surveillez l'Etat de l'utilisateur
+onMounted( () => {
+  onAuthStateChanged(auth, (user) => {
+    if(user){
+      isLoggedIn.value = true;
+    }else{
+      isLoggedIn.value = false;
+    }
+  });
+});
+
+// Deconnexion
+const handleSignOut = async() => {
+  try {
+    await signOut(auth);
+    console.log("Deconnexion avec success");
+    isLoggedIn.value = false;
+    
+  } catch (error) {
+    console.log("Erreur " , error.message);
+    
+  }
+}
+
+
+</script>

@@ -1,80 +1,71 @@
 <script setup lang="ts">
-import ProcessusLeftComponent from '@/components/ProcessusLeftComponent.vue';
-import ProcessusRightComponent from '@/components/ProcessusRightComponent.vue';
-import { RouterLink } from 'vue-router';
+import { ref, onMounted } from "vue";
+import ProcessusLeftComponent from "@/components/ProcessusLeftComponent.vue";
+import ProcessusRightComponent from "@/components/ProcessusRightComponent.vue";
+import { RouterLink } from "vue-router";
 
+// Liste réactive pour stocker les fichiers uploadés
+const files = ref<{ name: string; size: number; type: string }[]>([]);
 
-import { ref, onMounted } from "vue"; // pour des data reactifs | onMonted Au chargement
+// Sauvegarde des fichiers dans le LocalStorage
+const saveFileToLocalStorage = () => {
+    localStorage.setItem("uploadedFiles", JSON.stringify(files.value));
+};
 
-
-
-
-    // const files  = ref<File[]>([]);
-    // const files  = ref(
-    //     JSON.parse(localStorage.getItem("uploadedFiles")) || [] // localStorage.getItem pour recuperer
-    //     // Json donne désérialisées avec JSON.parse
-    // );
-
-    const files = ref<{ 
-        name: string; 
-        size: number; 
-        type: string;
-    }[]>([]);
-
-    
-
-    //sauvegarde des fichier meme apres rafrichissement
-    const saveFileToLocalStorage = () => {
-        localStorage.setItem("uploadedFiles", JSON.stringify(files.value)); // localStorage.setItem pour sauvegarder
-        // JSon sérialisées avec JSON.stringify
+// Gérer l'upload de fichiers
+const handleFileUpload = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files) {
+        const newFiles = Array.from(target.files).map((file) => ({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+        }));
+        files.value = [...files.value, ...newFiles];
+        saveFileToLocalStorage();
     }
+};
 
-    // Gerer le upload de fichiers
-    const handleFileUpload = (event: Event) => {
-        const target = event.target as HTMLInputElement;
-        if(target.files){
-            // converit l'object File en objects avec metadonnees
-            const newFiles = Array.from(target.files).map((file) => ({
-                name: file.name,
-                size: file.size,
-                type: file.type,
-            }));
-            
-            files.value = [
-                ...files.value,
-                // ...Array.from(target.files)
-                ...newFiles
-            ];
-            saveFileToLocalStorage(); // sauvegarde immediat a l'ajout
-        }
-    };
+// Définir le type des options sélectionnées
+interface SelectedOptions {
+    colorMode: "blackWhite" | "color";
+    pageFormat: "a4" | "a3";
+    scaleMode: "original" | "fitPage";
+    copies: number;
+}
 
-    // suppression de fichier par index
-    const removeFile = (index: number) => {
-        files.value.splice(index, 1); // pour retirer de la liste
-        saveFileToLocalStorage(); // mise a jour avec la meme fonction
-    }
+// État des options sélectionnées
+const selectedOptions = ref<SelectedOptions>({
+    colorMode: "blackWhite",
+    pageFormat: "a4",
+    scaleMode: "original",
+    copies: 1,
+});
 
-    // Charger les fichiers depuis le LocalStorage au chargement de la page
-    onMounted(() => {
+// Supprimer un fichier par son index
+const removeFile = (index: number) => {
+    files.value.splice(index, 1);
+    saveFileToLocalStorage();
+};
+
+// Charger les fichiers depuis le LocalStorage au chargement de la page
+onMounted(() => {
     const savedFiles = localStorage.getItem("uploadedFiles");
     if (savedFiles) {
         try {
             const parsedFiles = JSON.parse(savedFiles);
             if (Array.isArray(parsedFiles)) {
-                files.value = parsedFiles; // Assigner uniquement si c'est un tableau
+                files.value = parsedFiles;
             }
         } catch (error) {
-            console.error("Erreur lors de la récupération des fichiers depuis le LocalStorage :", error);
+            console.error("Erreur lors de la récupération des fichiers :", error);
         }
     }
 });
 </script>
 
 <template>
-    
-    <section class="bg-gray-300 p-4 m-4 flex justify-between ">
-
+    <section class="bg-gray-300 p-4 m-4 flex justify-between">
         <div class="file-upload">
             <!-- Input de fichier masqué -->
             <input
@@ -93,20 +84,30 @@ import { ref, onMounted } from "vue"; // pour des data reactifs | onMonted Au ch
             </label>
         </div>
 
-        <RouterLink to="" class="hover:underline ">
-            Help
-        </RouterLink>
+        <RouterLink to="" class="hover:underline">Help</RouterLink>
     </section>
 
-    <section class="grid grid-cols-1  md:grid-cols-12 gap-4 m-4">
-
-        <!-- Le second composant occupe 8 colonnes -->
-        <ProcessusLeftComponent 
-            :files="files" 
+    <section class="grid grid-cols-1 md:grid-cols-12 gap-4 m-4">
+        <!-- Composant gauche -->
+        <ProcessusLeftComponent
+            :files="files"
             @removeFile="removeFile"
-         />
-        <!--  // ecoute l'evenement avec removeFile --> 
-        <!-- Le premier composant occupe 4 colonnes -->
-        <ProcessusRightComponent />
+            @selectFile="() => {
+                selectedOptions = {
+                    colorMode: 'blackWhite',
+                    pageFormat: 'a4',
+                    scaleMode: 'original',
+                    copies: 1,
+                };
+            }"
+        />
+
+        <!-- Composant droit -->
+        <ProcessusRightComponent
+            v-model:colorMode="selectedOptions.colorMode"
+            v-model:pageFormat="selectedOptions.pageFormat"
+            v-model:scaleMode="selectedOptions.scaleMode"
+            v-model:copies="selectedOptions.copies"
+        />
     </section>
 </template>
