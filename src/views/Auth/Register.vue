@@ -147,11 +147,11 @@
 <script setup>
 import { ref } from 'vue';
 import { auth } from '../../../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useRoute } from 'vue-router';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useRouter } from 'vue-router';
 
 
-const router = useRoute();
+const router = useRouter();
 
 const name = ref('');
 const email = ref('');
@@ -178,6 +178,12 @@ const register = async () => {
       email.value,
       password.value
     );
+
+    // Mise à jour du profil de l'utilisateur avec le nom
+    await updateProfile(userCredential.user, {
+      displayName: name.value, // Ajout du nom de l'utilisateur
+    });
+
     console.log("User created:", userCredential.user);
     success.value = true;
     router.push('/');

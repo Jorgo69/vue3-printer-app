@@ -55,8 +55,10 @@
         <div class="flex flex-col md:flex-row md:mx-6">
           <!-- <RouterLink class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0" to="/">Accueil</RouterLink>
           <RouterLink class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0" to="/">Boutiques</RouterLink>
-          <RouterLink class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0" to="/">Contact</RouterLink>
-          <RouterLink class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0" to="/about">About</RouterLink> -->
+          <RouterLink class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0" to="/">Contact</RouterLink> -->
+          <!-- <RouterLink class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0" to="/profile">
+            Profile
+          </RouterLink> -->
         </div>
 
         <div class="flex justify-center md:block">
@@ -72,14 +74,17 @@
           <!-- Fin Panier -->
 
           <button class="bg-white flex items-center text-gray-700 dark:text-gray-300 justify-center gap-x-3  text-sm sm:text-base  dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5">
-            <img  class="w-5 h-5 sm:h-6 sm:w-6" src='../assets/svg/sign-in-circle-svgrepo-com.svg' alt="">
+            <img v-if="!isLoggedIn" class="w-5 h-5 sm:h-6 sm:w-6" src='../assets/svg/sign-in-circle-svgrepo-com.svg' alt="">
             <RouterLink v-if="!isLoggedIn" to="/login">
               <span>Se connecter</span>
             </RouterLink>
 
-            <button @click="handleSignOut" v-if="isLoggedIn">
-              <span>Se Deconnecter</span>
-            </button>
+            
+            <div class="flex gap gap-3" v-if="isLoggedIn">
+              <Avatar />
+              <button @click="handleSignOut" >Se Deconnecter</button>
+            </div>
+            <img v-if="isLoggedIn" class="w-5 h-5 sm:h-6 sm:w-6" src='../assets/svg/logout.svg' alt="">
 
         </button>
         </div>
@@ -93,6 +98,7 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { onMounted, ref } from 'vue';
 import { auth } from '../../firebase';
+import Avatar from './Avatar.vue';
 
 
 const isOpen = ref(false);

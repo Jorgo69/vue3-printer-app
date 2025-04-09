@@ -3,9 +3,9 @@ import { RouterLink} from 'vue-router'
 </script>
 
 <template>
+
   <header class="bg-white dark:bg-gray-900 text-center">
     
-
     <div class="container px-6 py-16 mx-auto">
         <div class="items-center lg:flex">
             <div class="w-full lg:w-1/2">
@@ -27,7 +27,6 @@ import { RouterLink} from 'vue-router'
         </div>
     </div>
 
-    
-
 </header>
+
 </template>
